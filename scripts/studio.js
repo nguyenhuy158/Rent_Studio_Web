@@ -154,6 +154,7 @@ onValue(starCountRef, (snapshot) => {
                                         "🚀 ~ file: studio.js:159 ~ categories.forEach ~ categories",
                                         categories
                                 );
+                                $("#modelEdit #studioCategoryId").empty();
                                 categories.forEach((element) => {
                                         const node =
                                                 document.createElementFromString(
