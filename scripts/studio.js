@@ -88,6 +88,10 @@ onValue(starCountRef, (snapshot) => {
                         description: data[element].description,
                         price: data[element].price,
                 };
+                console.log(
+                        "🚀 ~ file: studio.js:91 ~ keys.forEach ~ studio",
+                        studio
+                );
                 var table = document
                         .getElementById("tableStudio")
                         .getElementsByTagName("tbody")[0];
@@ -145,6 +149,21 @@ onValue(starCountRef, (snapshot) => {
                                 $("#modelEdit #studioThumbnailUrl").val(
                                         studioThumbnailUrl
                                 );
+                                // select html
+                                console.log(
+                                        "🚀 ~ file: studio.js:159 ~ categories.forEach ~ categories",
+                                        categories
+                                );
+                                categories.forEach((element) => {
+                                        const node =
+                                                document.createElementFromString(
+                                                        `<option value="${element.id}">${element.name}</option>`
+                                                );
+
+                                        $(
+                                                "#modelEdit #studioCategoryId"
+                                        ).append(node);
+                                });
                                 $("#modelEdit #studioDescription").val(
                                         studioDescription
                                 );
@@ -154,20 +173,30 @@ onValue(starCountRef, (snapshot) => {
         );
         // button update
         document.getElementById("update").addEventListener("click", (e) => {
-                const id = document.getElementById("modelCategoryId").innerHTML;
-                const name = document.getElementById("modelCategoryName").value;
-                const thumbnailUrl = document.getElementById(
-                        "modelCategoryTumbnailUrl"
-                ).value;
+                const modelStudioId = $("#modelEdit #modelStudioId").text();
+                const studioName = $("#modelEdit #studioName").val();
+                const studioThumbnailUrl = $(
+                        "#modelEdit #studioThumbnailUrl"
+                ).val();
+                const studioCategoryId = $(
+                        "#modelEdit #studioCategoryId"
+                ).val();
+                const studioDescription = $(
+                        "#modelEdit #studioDescription"
+                ).val();
+                const studioPrice = $("#modelEdit #studioPrice").val();
                 // update to database
                 const db = getDatabase();
-                const category = {
-                        name,
-                        thumbnailUrl,
+                const studio = {
+                        name: studioName,
+                        thumbnailUrl: studioThumbnailUrl,
+                        CategoryId: studioCategoryId,
+                        description: studioDescription,
+                        price: studioPrice,
                 };
 
                 const updates = {};
-                updates["/Studio/" + id] = category;
+                updates["/Studio/" + modelStudioId] = studio;
                 const result = update(ref(db), updates);
                 console.log(result);
                 $("#modelEdit").modal("hide");
