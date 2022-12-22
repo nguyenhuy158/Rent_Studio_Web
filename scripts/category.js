@@ -71,7 +71,6 @@ onValue(starCountRef, (snapshot) => {
                 var cell4 = row.insertCell(3);
 
                 cell1.innerHTML = category.id;
-                cell1.setAttribute("scope", "row");
                 cell2.innerHTML = category.name;
                 cell3.innerHTML = `<img style=" width: 100px; height: 100px; object-fit: cover; " src='${category.thumbnailUrl}'/>`;
                 cell4.innerHTML = `<button class="edit btn btn-primary" type="button" data-toggle="modal" data-target="#modelEdit">edit</button>`;
