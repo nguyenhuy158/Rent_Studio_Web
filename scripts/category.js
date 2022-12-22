@@ -43,7 +43,6 @@ onValue(starCountRef, (snapshot) => {
         // clear all rows except header
         var mytbl = document.getElementById("tableCategory");
         mytbl.getElementsByTagName("tbody")[0].innerHTML = "";
-        // mytbl.rows[0].innerHTML;
 
         const data = snapshot.val();
         console.log(data);

@@ -113,7 +113,7 @@ onValue(starCountRef, (snapshot) => {
                 ).name;
                 cell4.innerHTML = categoryName;
                 cell5.innerHTML = studio.description;
-                cell6.innerHTML = studio.price;
+                cell6.innerHTML = getDisplayMoney(studio.price);
                 cell7.innerHTML = `<button class="edit btn btn-primary" type="button" data-toggle="modal" data-target="#modelEdit">edit</button>`;
                 cell7.innerHTML += `<button class="delete btn btn-secondary">delete</button>`;
                 cell7.dataset.studioId = studio.id;
@@ -193,7 +193,7 @@ onValue(starCountRef, (snapshot) => {
                         thumbnailUrl: studioThumbnailUrl,
                         CategoryId: studioCategoryId,
                         description: studioDescription,
-                        price: studioPrice,
+                        price: parseInt(studioPrice),
                 };
 
                 const updates = {};
@@ -250,7 +250,7 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                         thumbnailUrl: studioThumbnailUrl,
                         CategoryId: studioCategoryId,
                         description: studioDescription,
-                        price: studioPrice,
+                        price: parseInt(studioPrice),
                 };
 
                 // Get a key for a new Post.
@@ -265,3 +265,13 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                 );
         }
 });
+
+function getDisplayMoney(money) {
+        const locales = "vi-VI";
+        const formatter = new Intl.NumberFormat(locales, {
+                style: "currency",
+                currency: "VND",
+        });
+
+        return formatter.format(money);
+}
