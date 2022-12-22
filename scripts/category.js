@@ -40,6 +40,11 @@ const analytics = getAnalytics(app);
 const db = getDatabase();
 const starCountRef = ref(db, "Category/");
 onValue(starCountRef, (snapshot) => {
+        // clear all rows except header
+        var mytbl = document.getElementById("tableCategory");
+        mytbl.getElementsByTagName("tbody")[0].innerHTML = "";
+        // mytbl.rows[0].innerHTML;
+
         const data = snapshot.val();
         console.log(data);
         console.log(typeof data);
@@ -55,8 +60,10 @@ onValue(starCountRef, (snapshot) => {
                         thumbnailUrl: data[element].thumbnailUrl,
                 };
                 console.log(category);
-                var table = document.getElementById("tableCategory");
-                var row = table.insertRow(1);
+                var table = document
+                        .getElementById("tableCategory")
+                        .getElementsByTagName("tbody")[0];
+                var row = table.insertRow(0);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 var cell3 = row.insertCell(2);
@@ -65,7 +72,7 @@ onValue(starCountRef, (snapshot) => {
                 cell1.innerHTML = category.id;
                 cell1.setAttribute("scope", "row");
                 cell2.innerHTML = category.name;
-                cell3.innerHTML = `<img width='200' heigh='200' src='${category.thumbnailUrl}'/>`;
+                cell3.innerHTML = `<img style=" width: 100px; height: 100px; object-fit: cover; " src='${category.thumbnailUrl}'/>`;
                 cell4.innerHTML = `<button class="edit">edit</button>
                 <button class="delete">delete</button>`;
                 cell4.dataset.categoryId = category.id;
@@ -85,6 +92,16 @@ onValue(starCountRef, (snapshot) => {
                         element.addEventListener("click", function (e) {
                                 const id =
                                         e.target.parentNode.dataset.categoryId;
+                                const db = getDatabase();
+
+                                const updates = {};
+                                updates["/Category/" + id] = null;
+
+                                const result = update(ref(db), updates);
+                                console.log(
+                                        "🚀 ~ file: category.js:97 ~ result",
+                                        result
+                                );
                         });
                 }
         );
@@ -94,11 +111,13 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
         e.preventDefault();
         const name = document.getElementById("name").value;
         const thumbnailUrl = document.getElementById("thumbnailUrl").value;
-        document.getElementById("name").value = "";
-        document.getElementById("thumbnailUrl").value = "";
 
         console.log(`${name} ${thumbnailUrl}`);
         if (name !== "" && thumbnailUrl !== "") {
+                // clear input data
+                document.getElementById("name").value = "";
+                document.getElementById("thumbnailUrl").value = "";
+
                 // add to database
                 const db = getDatabase();
                 const category = {
@@ -110,6 +129,7 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                 // Write the new post's data simultaneously in the posts list and the user's post list.
                 const updates = {};
                 updates["/Category/" + newPostKey] = category;
-                update(ref(db), updates);
+                const result = update(ref(db), updates);
+                console.log(result);
         }
 });
