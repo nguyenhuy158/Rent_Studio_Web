@@ -63,6 +63,7 @@ onValue(starCountRef, (snapshot) => {
                 var table = document
                         .getElementById("tableCategory")
                         .getElementsByTagName("tbody")[0];
+
                 var row = table.insertRow(0);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
@@ -73,9 +74,11 @@ onValue(starCountRef, (snapshot) => {
                 cell1.setAttribute("scope", "row");
                 cell2.innerHTML = category.name;
                 cell3.innerHTML = `<img style=" width: 100px; height: 100px; object-fit: cover; " src='${category.thumbnailUrl}'/>`;
-                cell4.innerHTML = `<button class="edit">edit</button>
-                <button class="delete">delete</button>`;
+                cell4.innerHTML = `<button class="edit btn btn-primary" type="button" data-toggle="modal" data-target="#modelEdit">edit</button>`;
+                cell4.innerHTML += `<button class="delete btn btn-secondary">delete</button>`;
                 cell4.dataset.categoryId = category.id;
+                cell4.dataset.categoryName = category.name;
+                cell4.dataset.categoryThumbnailUrl = category.thumbnailUrl;
         });
 
         Array.from(document.getElementsByClassName("edit")).forEach(
@@ -83,9 +86,59 @@ onValue(starCountRef, (snapshot) => {
                         element.addEventListener("click", function (e) {
                                 const id =
                                         e.target.parentNode.dataset.categoryId;
+                                console.log(
+                                        "🚀 ~ file: category.js:88 ~ id",
+                                        id
+                                );
+                                const name =
+                                        e.target.parentNode.dataset
+                                                .categoryName;
+                                console.log(
+                                        "🚀 ~ file: category.js:90 ~ name",
+                                        name
+                                );
+                                const thumbnailUrl =
+                                        e.target.parentNode.dataset
+                                                .categoryThumbnailUrl;
+                                console.log(
+                                        "🚀 ~ file: category.js:92 ~ thumbnailUrl",
+                                        thumbnailUrl
+                                );
+
+                                const model =
+                                        document.getElementById("modelEdit");
+                                document.getElementById(
+                                        "modelCategoryId"
+                                ).innerHTML = id;
+                                document.getElementById(
+                                        "modelCategoryName"
+                                ).value = name;
+                                document.getElementById(
+                                        "modelCategoryTumbnailUrl"
+                                ).value = thumbnailUrl;
                         });
                 }
         );
+        // button update
+        document.getElementById("update").addEventListener("click", (e) => {
+                const id = document.getElementById("modelCategoryId").innerHTML;
+                const name = document.getElementById("modelCategoryName").value;
+                const thumbnailUrl = document.getElementById(
+                        "modelCategoryTumbnailUrl"
+                ).value;
+                // update to database
+                const db = getDatabase();
+                const category = {
+                        name,
+                        thumbnailUrl,
+                };
+
+                const updates = {};
+                updates["/Category/" + id] = category;
+                const result = update(ref(db), updates);
+                console.log(result);
+                $("#modelEdit").modal("hide");
+        });
 
         Array.from(document.getElementsByClassName("delete")).forEach(
                 (element) => {
