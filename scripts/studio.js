@@ -203,9 +203,10 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                 // clear input data
                 document.getElementById("studioStudioName").value = "";
                 document.getElementById("studioThumbnailUrl").value = "";
-                document.getElementById("studioCategoryId").value = "";
                 document.getElementById("studioDescription").value = "";
-                document.getElementById("studioPrice").value = "";
+                const defaultValue =
+                        document.getElementById("studioPrice").defaultValue;
+                document.getElementById("studioPrice").value = defaultValue;
 
                 // add to database
                 const db = getDatabase();
