@@ -59,7 +59,6 @@ onValue(starCountRef, (snapshot) => {
                         total: data[element].total,
                         totalHour: data[element].totalHour,
                 };
-                console.log(order);
                 var table = document
                         .getElementById("tableOrder")
                         .getElementsByTagName("tbody")[0];
@@ -99,6 +98,7 @@ onValue(starCountRef, (snapshot) => {
                 cell10.dataset.orderTotalHour = order.totalHour;
         });
 
+        var order;
         // edit
         Array.from(document.getElementsByClassName("edit")).forEach(
                 (element) => {
@@ -126,6 +126,17 @@ onValue(starCountRef, (snapshot) => {
                                 const orderTotalHour =
                                         e.target.parentNode.dataset
                                                 .orderTotalHour;
+                                order = {
+                                        id: orderId,
+                                        bookTime: orderBookTime,
+                                        endDate: orderEndDate,
+                                        phone: orderPhone,
+                                        startDate: orderStartDate,
+                                        status: parseInt(orderStatus),
+                                        studioId: orderStudioId,
+                                        total: orderTotal,
+                                        totalHour: orderTotalHour,
+                                };
                                 $("#modelEdit #modelOrderId").text(orderId);
                                 $("#modelEdit #orderBookTime").val(
                                         orderBookTime
@@ -148,28 +159,16 @@ onValue(starCountRef, (snapshot) => {
         );
         // button update
         document.getElementById("update").addEventListener("click", (e) => {
-                const orderId = e.target.parentNode.dataset.orderId;
-                const orderBookTime = e.target.parentNode.dataset.orderBookTime;
-                const orderEndDate = e.target.parentNode.dataset.orderEndDate;
-                const orderPhone = e.target.parentNode.dataset.orderPhone;
-                const orderStartDate =
-                        e.target.parentNode.dataset.orderStartDate;
-                const orderStatus = $("#modelEdit #orderStatus").val();
-                const orderStudioId = e.target.parentNode.dataset.orderStudioId;
-                const orderTotal = e.target.parentNode.dataset.orderTotal;
-                const orderTotalHour =
-                        e.target.parentNode.dataset.orderTotalHour;
                 // update to database
                 const db = getDatabase();
-                const category = {
-                        name,
-                        thumbnailUrl,
-                };
-
+                order.status = parseInt($("#modelEdit #orderStatus").val());
                 const updates = {};
-                updates["/Category/" + id] = category;
+                updates["/Request/" + order.id] = order;
                 const result = update(ref(db), updates);
-                console.log(result);
+                console.log(
+                        "🚀 ~ file: order.js:168 ~ document.getElementById ~ result",
+                        result
+                );
                 $("#modelEdit").modal("hide");
         });
 
@@ -194,6 +193,7 @@ onValue(starCountRef, (snapshot) => {
 });
 
 function getStatus(status) {
+        console.log("🚀 ~ file: order.js:193 ~ getStatus ~ status", status);
         const badgePrimary = `<span class="badge badge-pill badge-primary">Done</span>`;
         const badgeSecondary = `<span class="badge badge-pill badge-secondary">Waiting</span>`;
         const badgeSuccess = `<span class="badge badge-pill badge-success">Success</span>`;
