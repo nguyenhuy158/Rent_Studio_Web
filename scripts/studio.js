@@ -116,8 +116,8 @@ onValue(starCountRef, (snapshot) => {
                 cell7.dataset.studioName = studio.name;
                 cell7.dataset.studioThumbnailUrl = studio.thumbnailUrl;
                 cell7.dataset.studioCategoryId = studio.CategoryId;
-                cell7.dataset.studioDescription = studio.Description;
-                cell7.dataset.studioPrice = studio.Price;
+                cell7.dataset.studioDescription = studio.description;
+                cell7.dataset.studioPrice = studio.price;
         });
 
         // edit
@@ -140,11 +140,15 @@ onValue(starCountRef, (snapshot) => {
                                 const studioPrice =
                                         e.target.parentNode.dataset.studioPrice;
 
-                                const val = $("#modelStudioId");
-                                console.log(
-                                        "🚀 ~ file: studio.js:144 ~ val",
-                                        val
+                                $("#modelEdit #modelStudioId").text(studioId);
+                                $("#modelEdit #studioName").val(studioName);
+                                $("#modelEdit #studioThumbnailUrl").val(
+                                        studioThumbnailUrl
                                 );
+                                $("#modelEdit #studioDescription").val(
+                                        studioDescription
+                                );
+                                $("#modelEdit #studioPrice").val(studioPrice);
                         });
                 }
         );
