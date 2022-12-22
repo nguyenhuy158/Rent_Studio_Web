@@ -29,9 +29,9 @@
 
                         <!-- name input-->
                         <div class="form-group">
-                            <label class="col control-label" for="studioStudioName">Name</label>
+                            <label class="col control-label" for="studioName">Name</label>
                             <div class="col">
-                                <input id="studioStudioName" name="studioStudioName" type="text" placeholder=""
+                                <input id="studioName" name="studioName" type="text" placeholder=""
                                     class="form-control input-md">
                             </div>
                         </div>
@@ -136,19 +136,47 @@
 
                         <!-- name input-->
                         <div class="form-group">
-                            <label class="col control-label" for="textinput">Studio Name</label>
+                            <label class="col control-label" for="studioStudioName">Name</label>
                             <div class="col">
-                                <input id="modelStudioName" name="textinput" type="text" placeholder=""
+                                <input id="studioStudioName" name="studioStudioName" type="text" placeholder=""
                                     class="form-control input-md">
                             </div>
                         </div>
 
                         <!-- url input-->
                         <div class="form-group">
-                            <label class="col control-label" for="passwordinput">Thumbnail Url</label>
+                            <label class="col control-label" for="studioThumbnailUrl">Thumbnail Url</label>
                             <div class="col">
-                                <input id="modelStudioTumbnailUrl" name="passwordinput" type="text" placeholder=""
+                                <input id="studioThumbnailUrl" name="studioThumbnailUrl" type="text" placeholder=""
                                     class="form-control input-md">
+                            </div>
+                        </div>
+
+                        <!-- dropdown catagory id -->
+                        <div class="col">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="studioCategoryId">Options</label>
+                                </div>
+                                <select class="custom-select" id="studioCategoryId">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- description -->
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="studioDescription">Description</label>
+                                <textarea class="form-control " id="studioDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- price input-->
+                        <div class="form-group">
+                            <label class="col control-label" for="studioPrice">Price</label>
+                            <div class="col">
+                                <input id="studioPrice" name="studioPrice" type="number" placeholder=""
+                                    class="form-control input-md" value="1000" step="1000">
                             </div>
                         </div>
                     </form>

@@ -124,25 +124,27 @@ onValue(starCountRef, (snapshot) => {
         Array.from(document.getElementsByClassName("edit")).forEach(
                 (element) => {
                         element.addEventListener("click", function (e) {
-                                //  const id =
-                                //          e.target.parentNode.dataset.categoryId;
-                                //  const name =
-                                //          e.target.parentNode.dataset
-                                //                  .categoryName;
-                                //  const thumbnailUrl =
-                                //          e.target.parentNode.dataset
-                                //                  .categoryThumbnailUrl;
-                                //  const model =
-                                //          document.getElementById("modelEdit");
-                                //  document.getElementById(
-                                //          "modelCategoryId"
-                                //  ).innerHTML = id;
-                                //  document.getElementById(
-                                //          "modelCategoryName"
-                                //  ).value = name;
-                                //  document.getElementById(
-                                //          "modelCategoryTumbnailUrl"
-                                //  ).value = thumbnailUrl;
+                                const studioId =
+                                        e.target.parentNode.dataset.studioId;
+                                const studioName =
+                                        e.target.parentNode.dataset.studioName;
+                                const studioThumbnailUrl =
+                                        e.target.parentNode.dataset
+                                                .studioThumbnailUrl;
+                                const studioCategoryId =
+                                        e.target.parentNode.dataset
+                                                .studioCategoryId;
+                                const studioDescription =
+                                        e.target.parentNode.dataset
+                                                .studioDescription;
+                                const studioPrice =
+                                        e.target.parentNode.dataset.studioPrice;
+
+                                const val = $("#modelStudioId");
+                                console.log(
+                                        "🚀 ~ file: studio.js:144 ~ val",
+                                        val
+                                );
                         });
                 }
         );
@@ -189,8 +191,7 @@ onValue(starCountRef, (snapshot) => {
 // add
 document.getElementById("buttonAdd").addEventListener("click", (e) => {
         e.preventDefault();
-        const studioStudioName =
-                document.getElementById("studioStudioName").value;
+        const studioName = document.getElementById("studioName").value;
         const studioThumbnailUrl =
                 document.getElementById("studioThumbnailUrl").value;
         const studioCategoryId =
@@ -199,9 +200,9 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                 document.getElementById("studioDescription").value;
         const studioPrice = document.getElementById("studioPrice").value;
 
-        if (studioStudioName !== "" && studioThumbnailUrl !== "") {
+        if (studioName !== "" && studioThumbnailUrl !== "") {
                 // clear input data
-                document.getElementById("studioStudioName").value = "";
+                document.getElementById("studioName").value = "";
                 document.getElementById("studioThumbnailUrl").value = "";
                 document.getElementById("studioDescription").value = "";
                 const defaultValue =
@@ -211,7 +212,7 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
                 // add to database
                 const db = getDatabase();
                 const studio = {
-                        name: studioStudioName,
+                        name: studioName,
                         thumbnailUrl: studioThumbnailUrl,
                         CategoryId: studioCategoryId,
                         description: studioDescription,
