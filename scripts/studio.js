@@ -119,4 +119,113 @@ onValue(starCountRef, (snapshot) => {
                 cell7.dataset.studioDescription = studio.Description;
                 cell7.dataset.studioPrice = studio.Price;
         });
+
+        // edit
+        Array.from(document.getElementsByClassName("edit")).forEach(
+                (element) => {
+                        element.addEventListener("click", function (e) {
+                                //  const id =
+                                //          e.target.parentNode.dataset.categoryId;
+                                //  const name =
+                                //          e.target.parentNode.dataset
+                                //                  .categoryName;
+                                //  const thumbnailUrl =
+                                //          e.target.parentNode.dataset
+                                //                  .categoryThumbnailUrl;
+                                //  const model =
+                                //          document.getElementById("modelEdit");
+                                //  document.getElementById(
+                                //          "modelCategoryId"
+                                //  ).innerHTML = id;
+                                //  document.getElementById(
+                                //          "modelCategoryName"
+                                //  ).value = name;
+                                //  document.getElementById(
+                                //          "modelCategoryTumbnailUrl"
+                                //  ).value = thumbnailUrl;
+                        });
+                }
+        );
+        // button update
+        document.getElementById("update").addEventListener("click", (e) => {
+                const id = document.getElementById("modelCategoryId").innerHTML;
+                const name = document.getElementById("modelCategoryName").value;
+                const thumbnailUrl = document.getElementById(
+                        "modelCategoryTumbnailUrl"
+                ).value;
+                // update to database
+                const db = getDatabase();
+                const category = {
+                        name,
+                        thumbnailUrl,
+                };
+
+                const updates = {};
+                updates["/Studio/" + id] = category;
+                const result = update(ref(db), updates);
+                console.log(result);
+                $("#modelEdit").modal("hide");
+        });
+        // delete
+        Array.from(document.getElementsByClassName("delete")).forEach(
+                (element) => {
+                        element.addEventListener("click", function (e) {
+                                const id = e.target.parentNode.dataset.studioId;
+                                const db = getDatabase();
+
+                                const updates = {};
+                                updates["/Studio/" + id] = null;
+
+                                const result = update(ref(db), updates);
+                                console.log(
+                                        "🚀 ~ file: studio.js:180 ~ result",
+                                        result
+                                );
+                        });
+                }
+        );
+});
+
+// add
+document.getElementById("buttonAdd").addEventListener("click", (e) => {
+        e.preventDefault();
+        const studioStudioName =
+                document.getElementById("studioStudioName").value;
+        const studioThumbnailUrl =
+                document.getElementById("studioThumbnailUrl").value;
+        const studioCategoryId =
+                document.getElementById("studioCategoryId").value;
+        const studioDescription =
+                document.getElementById("studioDescription").value;
+        const studioPrice = document.getElementById("studioPrice").value;
+
+        if (studioStudioName !== "" && studioThumbnailUrl !== "") {
+                // clear input data
+                document.getElementById("studioStudioName").value = "";
+                document.getElementById("studioThumbnailUrl").value = "";
+                document.getElementById("studioCategoryId").value = "";
+                document.getElementById("studioDescription").value = "";
+                document.getElementById("studioPrice").value = "";
+
+                // add to database
+                const db = getDatabase();
+                const studio = {
+                        name: studioStudioName,
+                        thumbnailUrl: studioThumbnailUrl,
+                        CategoryId: studioCategoryId,
+                        description: studioDescription,
+                        price: studioPrice,
+                };
+
+                // Get a key for a new Post.
+                const newPostKey = push(child(ref(db), "Studio")).key;
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                const updates = {};
+                updates["/Studio/" + newPostKey] = studio;
+                const result = update(ref(db), updates);
+                console.log(
+                        "🚀 ~ file: studio.js:226 ~ document.getElementById ~ result",
+                        result
+                );
+        }
 });

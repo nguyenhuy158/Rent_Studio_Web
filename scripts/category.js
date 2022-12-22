@@ -80,6 +80,7 @@ onValue(starCountRef, (snapshot) => {
                 cell4.dataset.categoryThumbnailUrl = category.thumbnailUrl;
         });
 
+        // edit
         Array.from(document.getElementsByClassName("edit")).forEach(
                 (element) => {
                         element.addEventListener("click", function (e) {
@@ -139,6 +140,7 @@ onValue(starCountRef, (snapshot) => {
                 $("#modelEdit").modal("hide");
         });
 
+        // delete
         Array.from(document.getElementsByClassName("delete")).forEach(
                 (element) => {
                         element.addEventListener("click", function (e) {
@@ -159,6 +161,7 @@ onValue(starCountRef, (snapshot) => {
         );
 });
 
+// add
 document.getElementById("buttonAdd").addEventListener("click", (e) => {
         e.preventDefault();
         const name = document.getElementById("name").value;
