@@ -94,8 +94,22 @@ document.getElementById("buttonAdd").addEventListener("click", (e) => {
         e.preventDefault();
         const name = document.getElementById("name").value;
         const thumbnailUrl = document.getElementById("thumbnailUrl").value;
+        document.getElementById("name").value = "";
+        document.getElementById("thumbnailUrl").value = "";
+
         console.log(`${name} ${thumbnailUrl}`);
         if (name !== "" && thumbnailUrl !== "") {
                 // add to database
+                const db = getDatabase();
+                const category = {
+                        name,
+                        thumbnailUrl,
+                };
+                // Get a key for a new Post.
+                const newPostKey = push(child(ref(db), "Category")).key;
+                // Write the new post's data simultaneously in the posts list and the user's post list.
+                const updates = {};
+                updates["/Category/" + newPostKey] = category;
+                update(ref(db), updates);
         }
 });
